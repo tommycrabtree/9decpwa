@@ -1,3 +1,9 @@
 <app-nav />
 
-<app-home [membersFromApp]="members()" />
+<main class="flex-1 pt-16"
+  [class.mt-24]="router.url != '/'"
+  [class.container]="router.url != '/'"
+  [class.mx-auto]="router.url != '/'"
+>
+  <router-outlet />
+</main>
