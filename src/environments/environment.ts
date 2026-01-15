@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://my-api.azurewebsites.net/api/'
+  apiUrl: 'https://talented-contentment-production.up.railway.app/api/'
 };
