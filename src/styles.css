@@ -9,12 +9,20 @@ html, body {
   overflow-x: hidden;
 }
 
-body {
-  overflow-y: hidden;
-}
-
 app-root {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+app-root.app-ready {
+  opacity: 1;
+}
+
+#initial-splash.fade-out {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
 }
