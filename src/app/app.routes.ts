@@ -8,6 +8,7 @@ import { authGuard } from '../core/guards/auth-guard';
 import { TestErrors } from '../features/test-errors/test-errors';
 import { NotFound } from '../shared/errors/not-found/not-found';
 import { ServerError } from '../shared/errors/server-error/server-error';
+import { ItemCreation } from '../features/items/item-creation/item-creation';
 
 export const routes: Routes = [
   {path: '', component: Home},
@@ -16,10 +17,12 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
+      { path: '', redirectTo: 'item-creation', pathMatch: 'full' },
       { path: 'members', component: MemberList },
       { path: 'members/:id', component: MemberDetailed },
       { path: 'lists', component: Lists },
-      { path: 'messages', component: Messages }
+      { path: 'messages', component: Messages },
+      { path: 'item-creation', component: ItemCreation}
     ]
   },
   { path: 'errors', component: TestErrors },

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../../core/services/account-service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -19,7 +19,7 @@ export class Nav {
   login() {
     this.accountService.login(this.creds).subscribe({
       next: () => {
-        this.router.navigateByUrl('/members');
+        this.router.navigateByUrl('/item-creation');
         this.toast.success('Logged in successfully');
         this.creds = {};
       },

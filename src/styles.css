@@ -14,7 +14,7 @@ app-root {
   flex-direction: column;
   min-height: 100dvh;
   opacity: 0;
-  transition: opacity 500ms ease;
+  transition: opacity 700ms ease;
 }
 
 app-root.app-ready {
