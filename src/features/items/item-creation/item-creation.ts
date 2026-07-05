@@ -20,16 +20,17 @@ export class ItemCreation implements OnInit {
   }
 
   getProducts() {
-    console.log('CALLING API');
-
     this.productService.getProducts().subscribe({
       next: (result) => {
-        console.log('SETTING PRODUCTS', result);
+        console.log('STEP 1 - API RESULT', result);
+
         this.products = result;
 
+        console.log('STEP 2 = AFTER ASSIGN COPY', [...this.products]);
+
         setTimeout(() => {
-          console.log('AFTER SETTIMEOUT', this.products);
-        })
+          console.log('STEP 3 - LATE CHECK', this.products);
+        }, 2000);
       },
       error: (error) => {
         console.error(error);
