@@ -14,7 +14,6 @@ export const routes: Routes = [
   {path: '', component: Home},
   {
     path: '',
-    runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'item-creation', pathMatch: 'full' },
