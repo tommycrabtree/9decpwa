@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductService } from '../../../core/services/product-service';
 import { Product } from '../../../types/product';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-item-creation',
-  imports: [],
+  imports: [JsonPipe],
   templateUrl: './item-creation.html',
   styleUrl: './item-creation.css',
 })
