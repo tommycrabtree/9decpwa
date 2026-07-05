@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductService } from '../../../core/services/product-service';
 import { Product } from '../../../types/product';
 
@@ -10,9 +10,8 @@ import { Product } from '../../../types/product';
 })
 export class ItemCreation implements OnInit {
   private productService = inject(ProductService);
-  private cdr = inject(ChangeDetectorRef);
-  protected products: Product[] = [];
-  protected product: Product | null = null;
+  protected products = signal<Product[]>([]);
+  protected product = signal<Product | null>(null);
 
   ngOnInit(): void {
     this.getProducts();
@@ -21,11 +20,7 @@ export class ItemCreation implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe({
       next: (result) => {
-
-        this.products = result;
-
-        this.cdr.detectChanges();
-
+        this.products.set(result);
       },
       error: (error) => {
         console.error(error);
@@ -36,7 +31,7 @@ export class ItemCreation implements OnInit {
   getProduct(id: number) {
     this.productService.getProduct(id).subscribe({
       next: (result) => {
-        this.product = result;
+        this.product.set(result);
       },
       error: (error) => {
         console.error(error);
