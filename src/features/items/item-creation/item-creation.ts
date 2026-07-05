@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProductService } from '../../../core/services/product-service';
 import { Product } from '../../../types/product';
 import { JsonPipe } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-item-creation',
@@ -11,6 +12,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class ItemCreation implements OnInit {
   private productService = inject(ProductService);
+  private cdr = inject(ChangeDetectorRef);
   protected products: Product[] = [];
   protected product: Product | null = null;
 
@@ -27,6 +29,8 @@ export class ItemCreation implements OnInit {
         this.products = result;
 
         console.log('STEP 2 = AFTER ASSIGN COPY', [...this.products]);
+
+        this.cdr.detectChanges();
 
         setTimeout(() => {
           console.log('STEP 3 - LATE CHECK', this.products);
