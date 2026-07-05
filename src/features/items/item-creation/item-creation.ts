@@ -14,13 +14,21 @@ export class ItemCreation implements OnInit {
   protected product: Product | null = null;
 
   ngOnInit(): void {
+    console.log('INIT ItemCreation');
     this.getProducts();
   }
 
   getProducts() {
+    console.log('CALLING API');
+
     this.productService.getProducts().subscribe({
       next: (result) => {
+        console.log('SETTING PRODUCTS', result);
         this.products = result;
+
+        setTimeout(() => {
+          console.log('AFTER SETTIMEOUT', this.products);
+        })
       },
       error: (error) => {
         console.error(error);
