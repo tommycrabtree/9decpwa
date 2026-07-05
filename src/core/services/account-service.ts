@@ -12,6 +12,14 @@ export class AccountService {
   currentUser = signal<User | null>(null);
   private baseUrl = environment.apiUrl;
 
+  constructor() {
+    const user = localStorage.getItem('user');
+    
+    if (user) {
+      this.currentUser.set(JSON.parse(user));
+    }
+  }
+
   register(creds: RegisterCreds) {
     return this.http.post<User>(this.baseUrl + 'account/register', creds).pipe(
       tap(user => {
@@ -26,8 +34,7 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/login', creds).pipe(
       tap(user => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUser.set(user);
+          this.setCurrentUser(user);
         }
       })
     )
