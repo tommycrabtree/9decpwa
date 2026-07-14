@@ -1,0 +1,49 @@
+<div>
+
+    <div>
+        <form
+            [formGroup]="createProductForm"
+            (ngSubmit)="createProduct()">
+            <app-text-input
+                label="Product Name"
+                formControlName="displayName"
+            />
+            <app-text-input
+                label="Shelf Capacity"
+                formControlName="shelfCapacity"
+            />
+            <app-text-input
+                label="Shelf Days Allowed"
+                formControlName="shelfDaysAllowed"
+            />
+
+            <div>
+                <button
+                    type="submit"
+                    [disabled]="createProductForm.invalid"
+                    class="btn btn-primary">
+                    Create
+                </button>
+            </div>
+        </form>
+    </div>
+
+    @if (validationErrors().length > 0) {
+        <div>
+            <ul>
+                @for (error of validationErrors(); track $index) {
+                    <li>{{error}}</li>
+                }
+            </ul>
+        </div>
+    } @else {
+        <ul>
+            @for (product of products(); track product.id) {
+                <li>{{ product.displayName }},
+                    {{ product.shelfCapacity }},
+                    {{ product.shelfDaysAllowed }}
+                </li>
+            }
+        </ul>
+    }
+</div>
