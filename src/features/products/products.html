@@ -1,6 +1,7 @@
-<div>
+<div class="grid grid-cols-2 gap-8 p-8">
 
     <div>
+        <h2  class="text-2xl font-semibold mb-4">Create Product</h2>
         <form
             [formGroup]="createProductForm"
             (ngSubmit)="createProduct()">
@@ -28,22 +29,27 @@
         </form>
     </div>
 
-    @if (validationErrors().length > 0) {
-        <div>
+    <div>
+        <h2 class="text-2xl font-semibold mb-4">Products</h2>
+        @if (validationErrors().length > 0) {
+            <div>
+                <ul>
+                    @for (error of validationErrors(); track $index) {
+                        <li>{{error}}</li>
+                    }
+                </ul>
+            </div>
+        } @else {
             <ul>
-                @for (error of validationErrors(); track $index) {
-                    <li>{{error}}</li>
+                @for (product of products(); track product.id) {
+                    <li>{{ product.displayName }}
+                        -
+                        Shelf Capacity: {{ product.shelfCapacity }}
+                        -
+                        Shelf Days: {{ product.shelfDaysAllowed }}
+                    </li>
                 }
             </ul>
-        </div>
-    } @else {
-        <ul>
-            @for (product of products(); track product.id) {
-                <li>{{ product.displayName }},
-                    {{ product.shelfCapacity }},
-                    {{ product.shelfDaysAllowed }}
-                </li>
-            }
-        </ul>
-    }
+        }
+    </div>
 </div>
