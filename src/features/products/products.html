@@ -1,58 +1,94 @@
-<div class="grid grid-cols-2 gap-8 p-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
 
-    <div>
-        <h2  class="text-2xl font-semibold mb-4">Create Product</h2>
-        <form
-            [formGroup]="createProductForm"
-            (ngSubmit)="createProduct()">
-            <app-text-input
-                label="Product Name"
-                formControlName="displayName"
-            />
-            <app-text-input
-                label="Shelf Capacity"
-                type="number"
-                formControlName="shelfCapacity"
-            />
-            <app-text-input
-                label="Shelf Days Allowed"
-                type="number"
-                formControlName="shelfDaysAllowed"
-            />
+    <div class="card bg-base-100 shadow">
+        <div class="card-body">
 
-            <div>
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                    [disabled]="createProductForm.invalid"
-                >
-                    Create
-                </button>
-            </div>
-        </form>
+            <h2  class="card-title">Create Product</h2>
+
+            <form
+                [formGroup]="createProductForm"
+                (ngSubmit)="createProduct()"
+                class="flex flex-col gap-4">
+
+                <app-text-input
+                    label="Product Name"
+                    formControlName="displayName"
+                />
+
+                <app-text-input
+                    label="Shelf Capacity"
+                    type="number"
+                    formControlName="shelfCapacity"
+                />
+
+                <app-text-input
+                    label="Shelf Days Allowed"
+                    type="number"
+                    formControlName="shelfDaysAllowed"
+                />
+
+                <div class="card-actions justify-end">
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        [disabled]="createProductForm.invalid"
+                    >
+                        Create
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div>
-        <h2 class="text-2xl font-semibold mb-4">Products</h2>
-        @if (validationErrors().length > 0) {
-            <div>
-                <ul>
-                    @for (error of validationErrors(); track $index) {
-                        <li>{{error}}</li>
-                    }
-                </ul>
-            </div>
-        } @else {
-            <ul>
-                @for (product of products(); track product.id) {
-                    <li>{{ product.displayName }}
-                        -
-                        Shelf Capacity: {{ product.shelfCapacity }}
-                        -
-                        Shelf Days: {{ product.shelfDaysAllowed }}
-                    </li>
+    <!-- Products -->
+    <div class="card bg-base-100 shadow">
+        <div class="card-body">
+
+            <h2 class="card-title">Products: ({{ products().length}})</h2>
+
+                @if (validationErrors().length > 0) {
+                    <div class="alert alert-error mb-4">
+                        <ul>
+                            @for (error of validationErrors(); track $index) {
+                                <li>{{error}}</li>
+                            }
+                        </ul>
+                    </div>
                 }
-            </ul>
-        }
+
+            <table class="table table-zebra">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Capacity</th>
+                        <th>Shelf Days</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (products().length === 0) {
+                        <tr>
+                            <td colspan="3" class="text-center">
+                                No products
+                            </td>
+                        </tr>
+                    } @else {
+                        @for (product of products(); track product.id) {
+                            <tr>
+                                <td>{{ product.displayName }}</td>
+                                <td>{{ product.shelfCapacity }}</td>
+                                <td>{{ product.shelfDaysAllowed }}</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
+    
 </div>
