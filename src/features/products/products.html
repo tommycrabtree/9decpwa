@@ -11,18 +11,21 @@
             />
             <app-text-input
                 label="Shelf Capacity"
+                type="number"
                 formControlName="shelfCapacity"
             />
             <app-text-input
                 label="Shelf Days Allowed"
+                type="number"
                 formControlName="shelfDaysAllowed"
             />
 
             <div>
                 <button
                     type="submit"
+                    class="btn btn-primary"
                     [disabled]="createProductForm.invalid"
-                    class="btn btn-primary">
+                >
                     Create
                 </button>
             </div>

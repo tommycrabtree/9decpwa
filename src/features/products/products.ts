@@ -3,10 +3,11 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { ProductService } from '../../core/services/product-service';
 import { CreateProduct } from '../../types/createProduct';
 import { Product } from '../../types/product';
+import { TextInput } from '../../shared/text-input/text-input';
 
 @Component({
   selector: 'app-products',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TextInput],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
