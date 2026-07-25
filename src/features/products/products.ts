@@ -16,8 +16,9 @@ export class Products implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   protected createProductForm = this.fb.group({
       displayName: ['', [Validators.required]],
-      shelfCapacity: [0, [Validators.required]],
-      shelfDaysAllowed: [0, [Validators.required]]
+      shelfCapacity: [0, [Validators.required, Validators.min(1)]],
+      shelfDaysAllowed: [0, [Validators.required, Validators.min(1)]],
+      unitsPerCase: [0, [Validators.required, Validators.min(1)]]
     });
   protected validationErrors = signal<string[]>([]);
   protected products = signal<Product[]>([]);
@@ -94,7 +95,8 @@ export class Products implements OnInit {
           this.createProductForm.reset({
             displayName: '',
             shelfCapacity: 0,
-            shelfDaysAllowed: 0
+            shelfDaysAllowed: 0,
+            unitsPerCase: 0
           });
         },
         error: error => {
