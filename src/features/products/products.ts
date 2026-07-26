@@ -16,9 +16,9 @@ export class Products implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   protected createProductForm = this.fb.group({
       displayName: ['', [Validators.required]],
+      unitsPerCase: [0, [Validators.required, Validators.min(1)]],
       shelfCapacity: [0, [Validators.required, Validators.min(1)]],
-      shelfDaysAllowed: [0, [Validators.required, Validators.min(1)]],
-      unitsPerCase: [0, [Validators.required, Validators.min(1)]]
+      shelfDaysAllowed: [0, [Validators.required, Validators.min(1)]]
     });
   protected validationErrors = signal<string[]>([]);
   protected products = signal<Product[]>([]);
@@ -94,9 +94,9 @@ export class Products implements OnInit {
 
           this.createProductForm.reset({
             displayName: '',
+            unitsPerCase: 0,
             shelfCapacity: 0,
-            shelfDaysAllowed: 0,
-            unitsPerCase: 0
+            shelfDaysAllowed: 0
           });
         },
         error: error => {
@@ -105,6 +105,38 @@ export class Products implements OnInit {
         }
       })
     }
+  }
+
+  // The component is exposing a method that can be called from the template
+  receiveCase(id: number) {
+
+    // This tells the product service to receive a case for the product number with this id
+    // The service doesn't update the UI.  Its only job is to communicate with the API
+    // Nothing happens until we subscribe
+    this.productService.receiveCase(id).subscribe({
+
+      // The updatedProduct variable doesn't exist until the server responds
+      // The server responds with Product, not just an integer
+      next: updatedProduct => {
+
+        // This takes whatever is currently inside this signal and lets me produce a new version
+        // In this case, I'm transforming the current array
+        this.products.update(products =>
+
+          // map() says: "I'll visit every product, and for each product, I'll return one product"
+          // The return value becomes part of the new array
+          products.map(product => {
+
+            // Every iteration must return something: either an updatedProduct or a product
+            // In other words, if this is the product that changed, return the updated one,
+            // otherwise return the original
+            return product.id === updatedProduct.id
+            ? updatedProduct
+            : product;
+          })
+        );
+      }
+    })
   }
 
   private loadProducts() {
