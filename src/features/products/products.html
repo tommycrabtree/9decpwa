@@ -69,8 +69,8 @@
                     <tr>
                         <th>Name</th>
                         <th>Units Per Case</th>
-                        <th>Freezer</th>
-                        <th></th>
+                        <th>Freezer Units</th>
+                        <th>Add Case</th>
                         <th>Capacity</th>
                         <th>Shelf Days</th>
                     </tr>
@@ -91,8 +91,10 @@
                                 <td>{{ product.freezerUnits }}</td>
                                 <td>
 <!--When the user clicks + case, Angular passes the product's id to the component's method-->
-                                    <button (click)="receiveCase(product.id)">
-                                    + case
+                                    <button
+                                        class="btn btn-sm btn-primary"
+                                        (click)="receiveCase(product.id)">
+                                        + case
                                     </button>
                                 </td>
                                 <td>{{ product.shelfCapacity }}</td>
