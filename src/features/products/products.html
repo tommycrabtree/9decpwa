@@ -71,6 +71,7 @@
                         <th>Units Per Case</th>
                         <th>Freezer Units</th>
                         <th>Add Case</th>
+                        <th>Subtract Case</th>
                         <th>Capacity</th>
                         <th>Shelf Days</th>
                     </tr>
@@ -79,7 +80,7 @@
                 <tbody>
                     @if (products().length === 0) {
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="7" class="text-center">
                                 No products
                             </td>
                         </tr>
@@ -92,9 +93,17 @@
                                 <td>
 <!--When the user clicks + case, Angular passes the product's id to the component's method-->
                                     <button
-                                        class="btn btn-sm btn-primary"
+                                        class="btn btn-sm btn-success"
                                         (click)="receiveCase(product.id)">
                                         + case
+                                    </button>
+                                </td>
+                                <td>
+<!--When the user clicks - case, Angular passes the product's id to the component's method-->
+                                    <button
+                                        class="btn btn-sm btn-warning"
+                                        (click)="subtractCase(product.id)">
+                                        - case
                                     </button>
                                 </td>
                                 <td>{{ product.shelfCapacity }}</td>

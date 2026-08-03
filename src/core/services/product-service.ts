@@ -34,6 +34,14 @@ export class ProductService {
         );
     }
 
+    // The service doesn't update the UI.  Its only job is to communicate with the API
+    subtractCase(id: number): Observable<Product> {
+        return this.http.post<Product>(
+            `${this.productsUrl}/${id}/subtract-case`,
+            {}
+        );
+    }
+
     updateProduct(product: Product): Observable<Product> {
         return this.http.put<Product>(
             `${this.productsUrl}/${product.id}`,

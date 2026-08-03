@@ -34,11 +34,12 @@ export class Products implements OnInit {
       // include an id because the user doesn't give a 'newProduct' and id.
 
       // A user fills out the form.  The component uses the form to create a CreateProduct
-      // that only contains a newProduct a displayName, a shelfCapacity,
+      // that only contains a newProduct a displayName, a unitsPerCase, a shelfCapacity,
       // and a shelfDaysAllowed like this:
 
       // newProduct = {
       //     displayName: "Organic Sourdough",
+      //     unitsPerCase: 8,
       //     shelfCapacity: 16,
       //     shelfDaysAllowed: 10
       // }
@@ -114,6 +115,38 @@ export class Products implements OnInit {
     // The service doesn't update the UI.  Its only job is to communicate with the API
     // Nothing happens until we subscribe
     this.productService.receiveCase(id).subscribe({
+
+      // The updatedProduct variable doesn't exist until the server responds
+      // The server responds with Product, not just an integer
+      next: updatedProduct => {
+
+        // This takes whatever is currently inside this signal and lets me produce a new version
+        // In this case, I'm transforming the current array
+        this.products.update(products =>
+
+          // map() says: "I'll visit every product, and for each product, I'll return one product"
+          // The return value becomes part of the new array
+          products.map(product => {
+
+            // Every iteration must return something: either an updatedProduct or a product
+            // In other words, if this is the product that changed, return the updated one,
+            // otherwise return the original
+            return product.id === updatedProduct.id
+            ? updatedProduct
+            : product;
+          })
+        );
+      }
+    })
+  }
+
+  // The component is exposing a method that can be called from the template
+  subtractCase(id: number) {
+
+    // This tells the product service to subtract a case for the product number with this id
+    // The service doesn't update the UI.  Its only job is to communicate with the API
+    // Nothing happens until we subscribe
+    this.productService.subtractCase(id).subscribe({
 
       // The updatedProduct variable doesn't exist until the server responds
       // The server responds with Product, not just an integer
